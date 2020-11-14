@@ -103,7 +103,7 @@ class LoginViewController: UIViewController {
                               action: #selector(didTapPrivacyButton),
                               for: .touchUpInside)
     
-        usernameEmailField.delegate = self
+        usernameEmailField.delegate = self                                                //Field.delegate Button.addTarget
         passwordField.delegate = self
         
         addSubviews()
@@ -147,7 +147,7 @@ class LoginViewController: UIViewController {
         
         termsButton.frame = CGRect(
             x: 10,
-            y: view.height - view.safeAreaInsets.bottom - 100,
+            y: view.height - view.safeAreaInsets.bottom - 90,
             width: view.width-20,
             height: 50
         )
@@ -178,7 +178,7 @@ class LoginViewController: UIViewController {
         imageView.frame = CGRect(
             x: headerView.width/4.0,
             y: view.safeAreaInsets.top,
-            width: headerView.height/1.5,
+            width: headerView.height/1.3,
             height: headerView.height - view.safeAreaInsets.top
         )
     }
@@ -198,12 +198,39 @@ class LoginViewController: UIViewController {
         usernameEmailField.resignFirstResponder()
         passwordField.resignFirstResponder()
         
-        guard let usernamrEmail = usernameEmailField.text, !usernamrEmail.isEmpty,
-            let password = passwordField.text, !password.isEmpty ,password.count >= 8 else {
+        guard let usernameEmail = usernameEmailField.text, !usernameEmail.isEmpty,
+            let password = passwordField.text, !password.isEmpty /* ,password.count >= 8 */else {
             return
         }
         
         // login functionality
+        var username:String?
+        var email:String?
+        
+        if usernameEmail.contains("@"), usernameEmail.contains("."){
+            //email
+            email = usernameEmail
+        }
+        else{
+            //username
+            username = usernameEmail
+        }
+        
+        AuthManager.shared.loginUser(username: username, email: email, password: password){ success in  //匿名函数
+            DispatchQueue.main.async {                                     //加入主线程队列 异步，更新 UI 主要在主队列异步
+                if success {
+                    self.dismiss(animated: true, completion: nil)
+                }
+                else{
+                     let alert = UIAlertController(title: "Log In Error",               //提示错误信息
+                                                  message: "We were unable to log you in.",
+                                                  preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel,     //关闭错误提示
+                                                  handler: nil))
+                    self.present(alert, animated: true)
+                }
+            }
+        }
         
     }
     
@@ -225,7 +252,8 @@ class LoginViewController: UIViewController {
     
     @objc private func didTapCreateAccountButton(){
         let vc = RegistrationViewController()
-        present(vc, animated: true)
+        vc.title = "创建用户"
+        present(UINavigationController(rootViewController: vc), animated: true)
     }
   
 }

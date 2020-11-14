@@ -6,6 +6,7 @@
 //  Copyright © 2020 Alfly. All rights reserved.
 //
 
+import AVFoundation
 import UIKit
 
 class CameraViewController: UIViewController {
@@ -14,7 +15,10 @@ class CameraViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        navigationController?.setNavigationBarHidden(true, animated: false)
     }
-    
+    private func didTapTakePicture() {
+        
+    }
 
 }
