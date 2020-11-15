@@ -9,25 +9,29 @@
 import UIKit
 import LeanCloud
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
+    private let tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.register(IGFeedPostTableViewCell.self,
+                           forCellReuseIdentifier: IGFeedPostTableViewCell.identifier)
+        return tableView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-    
-        /* LeanCloud Storage Test
-        do {
-            let testObject = LCObject(className: "TestObject")
-            try testObject.set("words", value: "Hello world!")
-            let result = testObject.save()
-            if let error = result.error {
-                print(error)
-            }
-        } catch {
-            print(error)
-        }*/
+        view.addSubview(tableView)
+        tableView.delegate = self
+        tableView.dataSource = self
     }
 
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tableView.frame = view.bounds
+    }
+    
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     
@@ -47,6 +51,16 @@ class HomeViewController: UIViewController {
         }
     }
     
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 0
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: IGFeedPostTableViewCell.identifier)as! IGFeedPostTableViewCell
+        return cell
+    }
+    
+
 
 }
 

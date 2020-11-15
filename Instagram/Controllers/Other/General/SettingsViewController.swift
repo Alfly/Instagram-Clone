@@ -44,13 +44,22 @@ final class SettingsViewController: UIViewController {
     }
     
     private func  configureModels() {
-        let section = [
-            SettingCellModel(title: "退出登陆"){[weak self] in
-                self?.didTapLogout()
-            
-            }
-        ]
-        data.append(section)
+        data.append([
+            SettingCellModel(title: "修改信息"){[weak self] in self?.didTapLogout()},
+            SettingCellModel(title: "邀请朋友"){[weak self] in self?.didTapLogout()},
+            SettingCellModel(title: "恢复初始数据"){[weak self] in self?.didTapLogout()} //Save Original Post
+        ])
+        
+        data.append([
+            SettingCellModel(title: "服务"){[weak self] in self?.didTapLogout()},
+            SettingCellModel(title: "隐私"){[weak self] in self?.didTapLogout()},
+            SettingCellModel(title: "反馈"){[weak self] in self?.didTapLogout()},
+            SettingCellModel(title: "帮助"){[weak self] in self?.didTapLogout()}
+        ])
+        
+        data.append([
+            SettingCellModel(title: "退出登陆"){[weak self] in self?.didTapLogout()}
+        ])
     }
     
     private func didTapLogout() {
@@ -95,6 +104,7 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = data[indexPath.section][indexPath.row].title
+        cell.accessoryType = .disclosureIndicator                    //cell's has a '>'
         return cell
     }
     
