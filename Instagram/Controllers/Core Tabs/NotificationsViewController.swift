@@ -16,14 +16,16 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
         return tableView
     }()
     
+    private lazy var noNotificationsView = NoNotificationsView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        title = "消息"
+        navigationItem.title = "消息"
         view.backgroundColor = .systemBackground
-        view.addSubview(tableView)
-        
+        //view.addSubview(tableView)
+        view.addSubview(noNotificationsView)
         tableView.delegate = self
         tableView.dataSource = self
     }
@@ -31,6 +33,8 @@ class NotificationsViewController: UIViewController, UITableViewDelegate, UITabl
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         tableView.frame = view.bounds
+        noNotificationsView.frame = CGRect(x: 0, y: 0, width: view.width/2, height: view.height/3)
+        noNotificationsView.center = view.center
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

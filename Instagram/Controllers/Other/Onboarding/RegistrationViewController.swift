@@ -111,7 +111,18 @@ class RegistrationViewController: UIViewController {
         AuthManager.shared.registerNewUser(username: username, email: email, password: password){ registered in
             DispatchQueue.main.async {
                 if registered{
-                    //success
+                    //register success
+                    //login user automatically
+                    
+                    
+                    //present home view
+                    let loginVC = LoginViewController()
+                    loginVC.modalPresentationStyle = .fullScreen
+                    self.present(loginVC, animated: true) {
+                        self.navigationController?.popToRootViewController(animated: false)
+                        self.tabBarController?.selectedIndex = 0
+                        
+                    }
                 }
                 else{
                     

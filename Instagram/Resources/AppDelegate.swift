@@ -18,11 +18,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // 在 Application 初始化代码执行之前执行
         LCApplication.logLevel = .off
         
+        let appId = "stgl1o19ta4XDoqpBHDhU8sV-gzGzoHsz"
+        let appKey = "lgHXxAVqPGPQg4Nxrz1sGs5U"
+        let appServerURL = "https://stgl1o19.lc-cn-n1-shared.com"
+        
         do {
             try LCApplication.default.set(
-                id: "stgl1o19ta4XDoqpBHDhU8sV-gzGzoHsz",
-                key: "lgHXxAVqPGPQg4Nxrz1sGs5U",
-                serverURL: "https://stgl1o19.lc-cn-n1-shared.com")
+                id: appId,
+                key: appKey,
+                serverURL: appServerURL)
         } catch {
             print(error)
         }
